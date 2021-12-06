@@ -1,7 +1,7 @@
-with open("input", "r") as file:
+with open("test_input", "r") as file:
 	fish = [int(x) for x in file.read().split(",")]
 
-LENGTH = 256
+LENGTH = 18
 
 starting_fish = fish
 
