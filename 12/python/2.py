@@ -3,21 +3,13 @@ with open("input", "r") as file:
 
 print(paths)
 
-def f(p, cave="end", visited=["end"], paths=[]):
-	count = 0
-	new_visited = visited + [cave]
-	print(f"visited: {new_visited}")
-	next_caves = [[x for x in y if x != cave][0] for y in p if cave in y]
-	#print(f"{cave}: {next_caves}")
-	next_caves = [x for x in next_caves if x not in visited or x.isupper()]
-	print(f"{cave}: {next_caves}")
-	for x in next_caves:
-		if x == "start":
+def f(one_off, cave="start", visited=set()):
+	if cave == "end": return 1
+	if cave.islower(): visited.add(cave)
+	next_caves = [[x for x in y if x != cave][0] for y in paths if cave in y]
+	total = sum(f(one_off, i, visited) for i in next_caves if i not in visited)
+	total += sum(f(i, i, visited) for i in next_caves if i in visited and i != "start") if one_off == " " else 0
+	if cave != one_off: visited.discard(cave)
+	return total
 
-			count += 1
-		if x != "start":
-			count += f(p, x, new_visited)
-	
-	return count
-
-print(f(paths))
+print(f(" "))
