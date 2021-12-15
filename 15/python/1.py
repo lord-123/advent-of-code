@@ -2,6 +2,27 @@ import math
 with open("input", "r") as file:
 	nodes = [[int(x) for x in y[:-1]] for y in file.readlines()]
 
+print(len(nodes), len(nodes[0]))
+
+for j,x in enumerate(nodes):
+	k = [[y+i-9 if y+i > 9 else y+i for y in x] for i in range(5)]
+	k = [x for l in k for x in l]
+	nodes[j] = k
+
+l = len(nodes)
+for i in range(1,5):
+	for x in nodes[:l]:
+		nodes += [[y+i-9 if y+i > 9 else y+i for y in x]]
+
+print(len(nodes), len(nodes[1]))
+
+with open("test_full", "r") as file:
+	test = [[int(x) for x in y[:-1]] for y in file.readlines()]
+
+print(test == nodes)
+print(len(nodes))
+print(len(nodes[0]))
+
 unvisited = { (i, j) for i in range(len(nodes)) for j in range(len(nodes[0])) }
 
 distances = [[math.inf for i in range(len(nodes[0]))] for j in range(len(nodes))]
@@ -20,9 +41,9 @@ while current != (len(nodes)-1, len(nodes[0])-1):
 			if k < distances[i][j]:
 				distances[i][j] = k
 		
+	print(current)
 	unvisited.discard(current)
 	current = min(unvisited, key=lambda x:distances[x[0]][x[1]])
-	#for y in distances:
-	#	print(y)
 
+print(distances)
 print(distances[-1][-1])
