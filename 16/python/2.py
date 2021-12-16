@@ -1,8 +1,22 @@
 with open("input", "r") as file:
-	bits = bin(int(file.read(), 16))[2:]
+	text = file.read()
+	bits = bin(int(text, 16))[2:]
 	bits = "".join(['0' for i in range(4-(len(bits)%4) if len(bits)%4!=0 else 0)]) + bits
+	if text[0] == "0":
+		bits = "0000" + bits
 
 LITERAL = 4
+
+from math import prod
+operators = {
+	0: sum,
+	1: prod,
+	2: min,
+	3: max,
+	5: lambda x: 1 if x[0] > x[1] else 0,
+	6: lambda x: 1 if x[0] < x[1] else 0,
+	7: lambda x: 1 if x[0] == x[1] else 0
+}
 
 print(bits)
 
@@ -53,11 +67,12 @@ def get_packet(bits, i=0):
 p = get_packet(bits)
 print(p)
 
-def sum_versions(p, acc=0):
-	acc += p[0]
-	if p[1] != LITERAL:
-		for x in p[3]:
-			acc += sum_versions(x)
-	return acc
+def evaluate_packet(p):
+	print("EVALUATION")
+	print(p)
+	if p[1] == LITERAL:
+		return p[3]
+	else:
+		return operators[p[1]]([evaluate_packet(x) for x in p[3]])
 
-print(sum_versions(p))
+print(evaluate_packet(p))
