@@ -133,4 +133,10 @@ for x in numbers:
 print(strl(acc))
 print(magnitude(eval(strl(acc))))
 
-print(magnitude([[1,2],[[3,4],5]]))
+m = 0
+for x in numbers:
+	for y in numbers:
+		m = max(m, magnitude(eval(strl(add(x, y)))))
+		m = max(m, magnitude(eval(strl(add(y, x)))))
+
+print(m)
