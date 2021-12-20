@@ -23,12 +23,15 @@ def enhance(image, algorithm, inf="."):
 			out[-1] += algorithm[x]
 			#print("i", i, "j", j, "idx:", idx)
 	
-	for x in out:
-		print(x)
+#	for x in out:
+#		print(x)
 	
 	return out
 
-a = enhance(image, algorithm)
-b = enhance(a, algorithm, "#")
+x = enhance(image, algorithm)
+for i in range(49):
+	x = enhance(x, algorithm, algorithm[i%2])
 
-print(sum(x.count("#") for x in b))
+for y in x:
+	print(y)
+print(sum(a.count("#") for a in x))
