@@ -22,6 +22,12 @@ def readlines(fname):
 def readstanzas(fname):
 	return [s.split("\n") for s in read(fname).split("\n\n")]
 
+def words(s):
+	return tmap(str, s.split(" "))
+
+def readlineswords(fname):
+	return tmap(words, readlines(fname))
+
 def ints(s):
 	return tmap(int, re.findall(r"-?\d+", s))
 
@@ -90,6 +96,22 @@ def bfs(source, target, neighbours):
 	path += [source]
 	path.reverse()
 	return path
+
+def graphdist(adj, weights = defaultdict(lambda: 1)):
+	dist = defaultdict(lambda: INF)
+	for v in adj:
+		for u in adj[v]:
+			dist[v,u] = weights[v,u]
+		dist[v,v] = 0
+	for u in adj:
+		for v in adj:
+			for w in adj:
+				dist[v,w] = min(dist[v,w], dist[v,u] + dist[u,w])
+	return dist
+
+def graphcull(adj, f): # culls if true
+	new = {x: tuple(y for y in adj[x] if not f(y)) for x in adj if not f(x)}
+	return new
 
 # range
 def merge(ranges):
