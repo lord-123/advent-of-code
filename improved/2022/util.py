@@ -17,10 +17,19 @@ def readstanzas(fname):
 	return [s.split("\n") for s in read(fname).split("\n\n")]
 
 def ints(s):
-	return map(int, re.findall(r"-?\d+", s))
+	return tmap(int, re.findall(r"-?\d+", s))
+
+def readlinesints(fname):
+	return lmap(ints, readlines(fname))
 
 def lmap(f, it):
 	return list(map(f, it))
+
+def tmap(f, it):
+	return tuple(map(f, it))
+
+def flat(it):
+	return [x for sub in it for x in sub]
 
 # vectors
 def manhattan(a, b):
@@ -28,6 +37,28 @@ def manhattan(a, b):
 
 def manhattanz3(a, b):
 	return Sum(*[Abs(a[i]-b[i]) for i in range(len(a))])
+
+def adjacents(v):
+	c = list(v[::])
+	for i, x in enumerate(c):
+		c[i] += 1
+		yield tuple(c)
+		c[i] -= 2
+		yield tuple(c)
+		c[i] += 1
+
+# graph
+def floodfill(blocked, start, bound=(-INF, INF)):
+	filled = set()
+	queue = [tuple(start)]
+	lowb, highb = bound
+	while len(queue) > 0:
+		n = queue.pop(0)
+		if any(x < lowb or x > highb for x in n): continue
+		if n in blocked or n in filled: continue
+		filled.add(n)
+		queue += adjacents(n)
+	return filled
 
 # range
 def merge(ranges):

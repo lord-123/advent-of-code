@@ -1,7 +1,7 @@
 from util import *
 from z3 import *
 
-sensors = map(ints, readlines("15.in"))
+sensors = readlinesints("15.in")
 
 #p1
 ranges = []
