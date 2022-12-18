@@ -1,2 +1,4 @@
 a.out
 .apl.history
+__pycache__/
+*.in
