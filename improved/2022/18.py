@@ -1,6 +1,6 @@
 from util import *
 
-cubes = tuple(readlinesints("18.in"))
+cubes = readlinesints("18.in")
 
 adj = flat(map(adjacents, cubes))
 

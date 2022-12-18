@@ -1,8 +1,14 @@
 import re
+from collections import *
 from z3 import *
 
 # constants
 INF = float("inf")
+
+DIRS = (( 0,  1),
+		( 1,  0),
+		( 0, -1),
+		(-1,  0))
 
 # parsing
 def read(fname):
@@ -20,7 +26,7 @@ def ints(s):
 	return tmap(int, re.findall(r"-?\d+", s))
 
 def readlinesints(fname):
-	return lmap(ints, readlines(fname))
+	return tmap(ints, readlines(fname))
 
 def lmap(f, it):
 	return list(map(f, it))
@@ -59,6 +65,31 @@ def floodfill(blocked, start, bound=(-INF, INF)):
 		filled.add(n)
 		queue += adjacents(n)
 	return filled
+
+def bfs(source, target, neighbours):
+	q = deque([source])
+	parent = {}
+
+	while q:
+		current = q.popleft()
+		if current == target: break
+
+		for n in neighbours[current]:
+			if n in parent: continue
+			parent[n] = current
+			q.append(n)
+
+	if target not in parent:
+		return None
+
+	pos = target
+	path = []
+	while pos != source:
+		path += [pos]
+		pos = parent[pos]
+	path += [source]
+	path.reverse()
+	return path
 
 # range
 def merge(ranges):
