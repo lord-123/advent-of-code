@@ -1,4 +1,5 @@
 import re
+import operator
 from collections import *
 from z3 import *
 
@@ -9,6 +10,15 @@ DIRS = (( 0,  1),
 		( 1,  0),
 		( 0, -1),
 		(-1,  0))
+
+OPS = {
+	"+": operator.add,
+	"-": operator.sub,
+	"/": operator.truediv,
+	"*": operator.mul,
+
+	"==": operator.eq
+}
 
 # parsing
 def read(fname):
@@ -123,6 +133,15 @@ def merge(ranges):
 			out += [[low, high]]
 	return out
 
+# instruction evaluation
+def eval_tree(tree):
+	if "literal" in tree: return tree["literal"]
+
+	return tree["operator"](*tuple(eval_tree(x) for x in tree["args"]))
+
+"""
+	return tree["operator"](eval_bintree(tree["left"]), eval_bintree(tree["right"]))
+"""
 # z3
 def all_solutions(solver):
 	s = solver.translate(main_ctx())
