@@ -2,3 +2,5 @@ a.out
 .apl.history
 __pycache__/
 *.in
+*input*
+*example*
