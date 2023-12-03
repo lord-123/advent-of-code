@@ -11,6 +11,15 @@ DIRS = (( 0,  1),
 		( 0, -1),
 		(-1,  0))
 
+ALL_DIRS = ((-1,  1),
+	    ( 0,  1),
+	    ( 1,  1),
+	    ( 1,  0),
+	    ( 1, -1),
+	    ( 0, -1),
+	    (-1, -1),
+	    (-1,  0))
+
 OPS = {
 	"+": operator.add,
 	"-": operator.sub,
@@ -68,7 +77,7 @@ def adjacents(v):
 		c[i] -= 2
 		yield tuple(c)
 		c[i] += 1
-
+#
 # graph
 def floodfill(blocked, start, bound=(-INF, INF)):
 	filled = set()
