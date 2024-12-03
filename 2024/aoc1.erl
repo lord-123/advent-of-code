@@ -31,8 +31,6 @@ count([Head | Tail], M) ->
     count(Tail, M#{Head => N});
 count([], M) -> M.
 
-
-
 p2({L, R}) ->
     Cl = count(L),
     Cr = count(R),
