@@ -1,5 +1,6 @@
 import re
 import operator
+import numpy
 from collections import *
 from z3 import *
 
@@ -68,6 +69,14 @@ def adjacents(v):
 		c[i] -= 2
 		yield tuple(c)
 		c[i] += 1
+
+# array
+def groups(l, f):
+	g = defaultdict(list)
+	for y in range(len(l)):
+		for x in range(len(l[y])):
+			g[f(x,y)] += [l[y][x]]
+	return lmap(g.get, sorted(g))
 
 # graph
 def floodfill(blocked, start, bound=(-INF, INF)):
