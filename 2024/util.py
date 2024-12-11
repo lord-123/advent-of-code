@@ -54,6 +54,9 @@ def tmap(f, it):
 def flat(it):
 	return [x for sub in it for x in sub]
 
+def flatmap(f, it):
+	return flat(lmap(f, it))
+
 # vectors
 def manhattan(a, b):
 	return sum(abs(a[i]-b[i]) for i in range(len(a)))
