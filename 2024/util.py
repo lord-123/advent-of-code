@@ -45,11 +45,11 @@ def ints(s):
 def readlinesints(fname):
 	return tmap(ints, readlines(fname))
 
-def lmap(f, it):
-	return list(map(f, it))
+def lmap(f, *it):
+	return list(map(f, *it))
 
-def tmap(f, it):
-	return tuple(map(f, it))
+def tmap(f, *it):
+	return tuple(map(f, *it))
 
 def flat(it):
 	return [x for sub in it for x in sub]
@@ -58,6 +58,9 @@ def flatmap(f, it):
 	return flat(lmap(f, it))
 
 # vectors
+def add(l1, l2):
+	return lmap(operator.add, l1, l2)
+
 def manhattan(a, b):
 	return sum(abs(a[i]-b[i]) for i in range(len(a)))
 
